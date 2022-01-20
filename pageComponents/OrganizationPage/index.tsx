@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { Scatter, ScatterChart, XAxis, YAxis } from "recharts";
+import PatentSummary from "../../components/PatentSummary";
 import { PatentWithExpDate } from "../../types";
 import css from "./index.module.css";
 
@@ -43,38 +44,39 @@ const Organization: NextPage<{ patents: PatentWithExpDate[] }> = ({
       <h3>Organization: {org}</h3>
       <h5> Total patents: {patents.length}</h5>
       <div className={css.patentList}>
-        {patents.map((p) => {
-          const exp = moment(p.expiration_date);
-          const pat = moment(p.patent_date);
-          return (
-            <div className={css.patentInfo}>
-              {p.applications.length > 0 && (
-                <div>Patent ID: {p.applications[0].app_id}</div>
-              )}
-              <div>Patent date: {p.patent_date}</div>
-              <div>Patent type: {p.patent_type}</div>
-
-              <div>CPCS ID(s): {p.cpcs.map((c) => c.cpc_section_id)}</div>
-
-              {p.applications.length > 0 && (
-                <div>Application date: {p.applications[0].app_date}</div>
-              )}
-              <div>
-                Expiration date: {exp.year()}-
-                {exp.month().toLocaleString("en-US", {
-                  minimumIntegerDigits: 2,
-                  useGrouping: false,
-                })}
-                -
-                {exp.day().toLocaleString("en-US", {
-                  minimumIntegerDigits: 2,
-                  useGrouping: false,
-                })}
-              </div>
-              <div>Expires {exp.fromNow()}.</div>
-            </div>
-          );
-        })}
+        {patents.map(
+          (p) => (
+            <PatentSummary patent={p} />
+          )
+          //   const exp = moment(p.expiration_date);
+          //   const pat = moment(p.patent_date);
+          //   return (
+          //     <div className={css.patentInfo}>
+          //       {p.applications.length > 0 && (
+          //         <div>Patent ID: {p.applications[0].app_id}</div>
+          //       )}
+          //       <div>Patent date: {p.patent_date}</div>
+          //       <div>Patent type: {p.patent_type}</div>
+          //       <div>CPCS ID(s): {p.cpcs.map((c) => c.cpc_section_id)}</div>
+          //       {p.applications.length > 0 && (
+          //         <div>Application date: {p.applications[0].app_date}</div>
+          //       )}
+          //       <div>
+          //         Expiration date: {exp.year()}-
+          //         {exp.month().toLocaleString("en-US", {
+          //           minimumIntegerDigits: 2,
+          //           useGrouping: false,
+          //         })}
+          //         -
+          //         {exp.day().toLocaleString("en-US", {
+          //           minimumIntegerDigits: 2,
+          //           useGrouping: false,
+          //         })}
+          //       </div>
+          //       <div>Expires {exp.fromNow()}.</div>
+          //     </div>
+          //   );
+        )}
       </div>
       {renderLineChart}
     </div>
