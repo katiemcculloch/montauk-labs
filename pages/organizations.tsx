@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import Loader from "react-loader";
+import OrganizationsList from "../components/OrganizationsList";
 import Search from "../components/Search";
 
 const Organizations: NextPage = () => {
@@ -41,24 +42,14 @@ const Organizations: NextPage = () => {
 
   return (
     <div>
-      <Search onChange={onChangeInput} />
-      <Loader loaded={!submitting} />
-      <div>Selected</div>
-      <div>{selected}</div>
-      {!submitting &&
-        results.map((r) => {
-          const org = r.assignee_organization;
-          return (
-            <div
-              onClick={() => {
-                setSelected(org);
-                router.push(`/organizations/${org}`);
-              }}
-            >
-              {org}
-            </div>
-          );
-        })}
+      <div>
+        <div>Search and select an organization:</div>
+        <Search onChange={onChangeInput} />
+        <Loader loaded={!submitting} />
+      </div>
+      {!submitting && (
+        <OrganizationsList setSelected={setSelected} orgs={results} />
+      )}
     </div>
   );
 };
