@@ -1,0 +1,40 @@
+import moment from "moment";
+import type { NextPage } from "next";
+import { useRouter } from "next/router";
+import React from "react";
+import { Scatter, ScatterChart, XAxis, YAxis } from "recharts";
+import { PatentWithExpDate } from "../../types";
+import css from "./index.module.css"
+
+const Organization: NextPage<{ patents: PatentWithExpDate[] }> = ({
+  patents,
+}) => {
+  const router = useRouter();
+  const org = router.query.orgName;
+
+  const renderLineChart = (
+    <ScatterChart
+      width={300}
+      height={300}
+      data={patents}
+      margin={{ top: 5, right: 20, bottom: 5, left: 20 }}
+    >
+      <XAxis
+        dataKey="expiration_date"
+        tickFormatter={(unixTime) => moment(unixTime).format("mm/yyyy")}
+        type="number"
+      />
+      <YAxis dataKey="patent_type" />
+      <Scatter stroke="#ccc" fill="black" strokeDasharray="5 5" />
+    </ScatterChart>
+  );
+
+  return (
+    <div className={css.container}>
+      <h3>Organization: {org}</h3>
+      {renderLineChart}
+    </div>
+  );
+};
+
+export default Organization;

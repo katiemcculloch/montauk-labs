@@ -20,7 +20,7 @@ const OrganizationsList = ({ orgs }: Props) => {
       {orgs.map((r) => {
         const orgName = r.assignee_organization;
         return (
-          <div key={orgName} onClick={() => onClick(orgName)}>
+          <div className={css.org} key={orgName} onClick={() => onClick(orgName)}>
             {orgName}
           </div>
         );
