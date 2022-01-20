@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
+import css from "./index.module.css";
 
 type Props = {
-  setSelected: (org: any) => void;
   orgs: Org[];
 };
 
@@ -9,15 +9,14 @@ type Org = {
   assignee_organization: string;
 };
 
-const OrganizationsList = ({ setSelected, orgs }: Props) => {
+const OrganizationsList = ({ orgs }: Props) => {
   const router = useRouter();
   const onClick = (orgName: string) => {
-    setSelected(orgName);
     router.push(`/organizations/${orgName}`);
   };
 
   return (
-    <div>
+    <div className={css.container}>
       {orgs.map((r) => {
         const orgName = r.assignee_organization;
         return (

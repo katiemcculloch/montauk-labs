@@ -12,7 +12,6 @@ const Organizations: NextPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [results, setResults] = useState([]);
-  const [selected, setSelected] = useState([]);
 
   const getData = async (q: string) => {
     const getUrl = `https://api.patentsview.org/assignees/query?q={"_begins":{"assignee_organization":"${q}"}}&f=["patent_number","patent_date","assignee_organization","assignee_id"]`;
@@ -47,9 +46,7 @@ const Organizations: NextPage = () => {
         <Search onChange={onChangeInput} />
         <Loader loaded={!submitting} />
       </div>
-      {!submitting && (
-        <OrganizationsList setSelected={setSelected} orgs={results} />
-      )}
+      {!submitting && <OrganizationsList orgs={results} />}
     </div>
   );
 };
